@@ -1,0 +1,13 @@
+{
+    "experiment_name": "B0_baseline",
+    "random_seed": 42,
+    "loss": "CrossEntropyLoss",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "max_epochs": 30,
+    "patience": 5,
+    "augmentation": "None",
+    "class_weights": "None",
+    "device": "cpu"
+}

@@ -1,0 +1,5 @@
+Experiment,Intervention,Best Epoch,Best Val Macro F1,Test Accuracy,Test Macro Precision,Test Macro Recall,Test Macro F1,Delta Test Macro F1 vs B0,Training Time (s)
+B0,Baseline,25,0.4230,0.5116,0.4249,0.4294,0.4225,+0.0000,1871.88
+B1,Class Weights,29,0.4948,0.5038,0.4769,0.4862,0.4738,+0.0513,1843.98
+B2,Augmentation,29,0.4139,0.5104,0.4205,0.4205,0.4172,-0.0054,2080.40
+B3,Weights + Augmentation,29,0.4497,0.4967,0.4376,0.4493,0.4391,+0.0165,1931.98

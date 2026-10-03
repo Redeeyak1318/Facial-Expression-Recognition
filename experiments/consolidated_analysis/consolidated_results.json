@@ -1,0 +1,42 @@
+{
+    "B0": {
+        "intervention": "Baseline",
+        "best_epoch": 25,
+        "best_val_macro_f1": 0.4230288638491347,
+        "test_accuracy": 0.5115631095012538,
+        "test_macro_precision": 0.4248681898880956,
+        "test_macro_recall": 0.42939119022155353,
+        "test_macro_f1": 0.42253828295052287,
+        "training_time_seconds": 1871.88
+    },
+    "B1": {
+        "intervention": "Class Weights",
+        "best_epoch": 29,
+        "best_val_macro_f1": 0.49479899940915845,
+        "test_accuracy": 0.5037614934522151,
+        "test_macro_precision": 0.4768888167493035,
+        "test_macro_recall": 0.4861578850089612,
+        "test_macro_f1": 0.47380822143814444,
+        "training_time_seconds": 1843.98
+    },
+    "B2": {
+        "intervention": "Augmentation",
+        "best_epoch": 29,
+        "best_val_macro_f1": 0.41387816971183133,
+        "test_accuracy": 0.5104485929228197,
+        "test_macro_precision": 0.42047964600227267,
+        "test_macro_recall": 0.420495168834285,
+        "test_macro_f1": 0.4171666485604549,
+        "training_time_seconds": 2080.4
+    },
+    "B3": {
+        "intervention": "Weights + Augmentation",
+        "best_epoch": 29,
+        "best_val_macro_f1": 0.44968354695329843,
+        "test_accuracy": 0.4966564502646977,
+        "test_macro_precision": 0.437620647710494,
+        "test_macro_recall": 0.44929370033235255,
+        "test_macro_f1": 0.4390748401665006,
+        "training_time_seconds": 1931.98
+    }
+}
