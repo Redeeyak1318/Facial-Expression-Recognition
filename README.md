@@ -1,7 +1,7 @@
-# Facial Expression Recognition using a Lightweight CNN
+# Facial Expression Recognition using a CNN
 
 ## Project Overview
-This is a 7-class facial-expression classification project utilizing a custom lightweight Convolutional Neural Network (CNN) trained on 48×48 grayscale facial images. 
+This is a 7-class facial-expression classification project utilizing a custom Convolutional Neural Network (CNN) trained on grayscale facial images. The current production model is **V3-B Moderate Augmentation** using the **ResidualCNN (V2-B)** architecture.
 
 Classes:
 - angry
@@ -25,45 +25,50 @@ Final split:
 - validation = 2,872
 - test = 7,178
 
-## Preprocessing
-- grayscale
-- 48×48
+## Production Preprocessing & Inference
+- Haar cascade face detection (`haarcascade_frontalface_default.xml`)
+- selection of the largest detected face
+- 0% tight bounding-box crop
+- conversion to grayscale
+- resize to 48×48 using bilinear interpolation
 - normalization to [0,1]
-- lazy/path-based image loading
+- lazy/path-based image loading during training
 
-## Model Architecture
-The exact `LightweightCNN` architecture used in all experiments:
+## Production Model Architecture (V3-B)
+The current production model uses the **ResidualCNN** architecture (introduced in V2-B).
+- Architecture: Residual blocks with skip connections, batch normalization, and dropout.
+- Parameters: 307,687
 
-Input 48×48×1
-→ Conv2d 1→32, 3×3, padding=1
-→ ReLU
-→ MaxPool 2×2
-→ Conv2d 32→64, 3×3, padding=1
-→ ReLU
-→ MaxPool 2×2
-→ Conv2d 64→128, 3×3, padding=1
-→ ReLU
-→ MaxPool 2×2
-→ Global Average Pooling
-→ Dropout 0.30
-→ Linear 128→7
+## Final Model Selection (V3-B)
+- **Selected experiment**: V3-B Moderate Augmentation
+- **Selection criterion**: Highest validation Macro F1
+- **Best validation Macro F1**: 0.5795
+- **Checkpoint**: `experiments/V3/V3_B_moderate_augmentation/checkpoint/best_model.pth`
 
-Parameters:
-93,575
+Held-out V3-B test metrics:
+- Accuracy = 0.5917
+- Macro Precision = 0.5489
+- Macro Recall = 0.5911
+- Macro F1 = 0.5576
 
-## Training Configuration
-- Adam
-- LR = 0.001
-- batch size = 64
-- max epochs = 30
-- early stopping patience = 5
-- seed = 42
-- CPU
-- checkpoint selected using validation Macro F1
+The official test set was used only for final held-out evaluation and was not used to select the model configuration. A separate set of 11 manually labeled real-world photos was used for qualitative engineering validation only and were not used for training, tuning, or model selection.
 
-## Controlled Experiments
-The following experimental interventions were tested against the baseline (B0).
+For detailed information on the V3-B model selection, augmentation pipeline, and engineering validation, see:
+[docs/V3_FINAL_MODEL_SELECTION.md](docs/V3_FINAL_MODEL_SELECTION.md)
 
+---
+
+## Historical Experiments (V1 / B0-B3 / V2)
+
+### Historical Model Architecture (LightweightCNN)
+The original `LightweightCNN` architecture used in early V1 (B0-B3) experiments:
+Input 48×48×1 → Conv2d 1→32 → ReLU → MaxPool 2×2 → Conv2d 32→64 → ReLU → MaxPool 2×2 → Conv2d 64→128 → ReLU → MaxPool 2×2 → Global Average Pooling → Dropout 0.30 → Linear 128→7
+Parameters: 93,575
+
+### Historical Training Configuration (V1)
+- Adam, LR = 0.001, batch size = 64, max epochs = 30, early stopping patience = 5
+
+### Historical Controlled Experiments (V1)
 | Experiment | Best Val Macro F1 | Test Accuracy | Test Macro Precision | Test Macro Recall | Test Macro F1 |
 |------------|-------------------|---------------|----------------------|-------------------|---------------|
 | B0 (Baseline) | 0.4230 | 0.5116 | 0.4249 | 0.4294 | 0.4225 |
@@ -71,36 +76,16 @@ The following experimental interventions were tested against the baseline (B0).
 | B2 (Augmentation) | 0.4139 | 0.5104 | 0.4205 | 0.4205 | 0.4172 |
 | B3 (Weights + Augmentation) | 0.4497 | 0.4967 | 0.4376 | 0.4493 | 0.4391 |
 
-## Final Model Selection
-- Selected experiment = B1_class_weighted
-- Selection criterion = highest validation Macro F1 among B0-B3
-- Best validation Macro F1 = 0.4948
-- checkpoint = `experiments/B1_class_weighted/checkpoint/best_model.pth`
-
-Held-out B1 test metrics:
-- Accuracy = 0.5038
-- Macro Precision = 0.4769
-- Macro Recall = 0.4862
-- Macro F1 = 0.4738
-
-The test set was used only for final held-out evaluation and was not used to select the model configuration.
-
-## Key Findings
-- class weighting substantially improved Macro F1 relative to B0
-- disgust F1 improved from 0.0000 in B0 to 0.3806 in B1
-- augmentation-only B2 did not improve over B0 under the tested configuration
-- B3 was better than B0/B2 but below B1
-- recurring confusions included fear→sad and neutral→sad
+*(Subsequent V2 experiments introduced the ResidualCNN and V3 introduced robust augmentations. V3-B superseded B1.)*
 
 ## Repository Structure
 - `src/data`: Dataset split, statistics, config, and dataloader logic.
 - `src/preprocessing`: Transform pipelines and image handling.
-- `src/models`: Neural network architecture definitions (`cnn.py`).
+- `src/models`: Neural network architecture definitions (`cnn.py`, `cnn_v2b.py`).
 - `src/training`: The core PyTorch training loop (`loop.py`).
+- `src/inference`: Production predictor and face detection (`predictor.py`, `face_detector.py`).
 - `experiments/`: Saved experiment checkpoints, configs, history, and evaluations.
-- `evaluate_b*.py`: Evaluation scripts corresponding to the experiments.
-- `smoke_test*.py`: Smoke tests used for dry-run verification before full training.
-- `train_b*.py`: Execution scripts for running experiments.
+- `docs/`: Project documentation and planning.
 
 Note: The raw dataset directory (`CNN_DataSet`) is intentionally kept local and not committed to source control due to size limits.
 
@@ -109,13 +94,7 @@ To inspect or reproduce the environment:
 1. activate the virtual environment: `.\.venv\Scripts\Activate.ps1`
 2. verify PyTorch environment: `python verify_pytorch.py`
 3. verify the data pipeline: `python verify_pipeline.py`
-4. run the completed experiment scripts only if needed (e.g. `python evaluate_b1.py`). *Do not rerun expensive full training experiments (`train_b*.py`) without backing up previous outputs.*
 
 ## Results Artifacts
-Final analytical reports and consolidated tables:
+Final analytical reports and consolidated tables for historical experiments:
 `experiments/consolidated_analysis/`
-Key files:
-- `RESULTS_AND_DISCUSSION.md`
-- `FINAL_ERROR_ANALYSIS.md`
-- `MODEL_SELECTION.md`
-- `consolidated_results.json`, `per_class_f1.csv`
