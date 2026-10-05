@@ -1,0 +1,366 @@
+{
+    "summary": {
+        "timestamp": "2026-10-05T01:36:50.575956",
+        "checkpoint": "C:\\Facial-Expression-Recognition\\experiments\\V3\\V3_A_augmentation\\checkpoint\\best_model.pth",
+        "best_epoch": 19,
+        "best_val_macro_f1": 0.5251729631896371,
+        "total_images": 11,
+        "faces_detected": 10,
+        "no_face_detected": 1,
+        "false_positive_detector": 1,
+        "errors": 0,
+        "average_confidence": 0.45617096722126005,
+        "prediction_distribution": {
+            "angry": 2,
+            "disgust": 0,
+            "fear": 0,
+            "happy": 1,
+            "neutral": 5,
+            "sad": 2,
+            "surprise": 0
+        },
+        "face_classification_correct": 6,
+        "face_classification_total": 9,
+        "face_classification_accuracy": 0.6666666666666666
+    },
+    "per_image": [
+        {
+            "filename": "IMG_20250609_122532.jpg",
+            "true_label": "happy",
+            "face_detected": true,
+            "bbox": [
+                1078,
+                3745,
+                486,
+                486
+            ],
+            "correct": false,
+            "predicted_class": "angry",
+            "confidence": 0.3682500422000885,
+            "probabilities": {
+                "angry": 0.3682500422000885,
+                "disgust": 0.10802359879016876,
+                "fear": 0.14751559495925903,
+                "happy": 0.06417214870452881,
+                "neutral": 0.030845312401652336,
+                "sad": 0.21763578057289124,
+                "surprise": 0.06355749070644379
+            }
+        },
+        {
+            "filename": "IMG_20250829_140834.jpg",
+            "true_label": "neutral",
+            "face_detected": true,
+            "bbox": [
+                1134,
+                1648,
+                718,
+                718
+            ],
+            "correct": true,
+            "predicted_class": "neutral",
+            "confidence": 0.6370334029197693,
+            "probabilities": {
+                "angry": 0.06720254570245743,
+                "disgust": 0.008008943870663643,
+                "fear": 0.032812848687171936,
+                "happy": 0.1866494119167328,
+                "neutral": 0.6370334029197693,
+                "sad": 0.04046516865491867,
+                "surprise": 0.027827691286802292
+            }
+        },
+        {
+            "filename": "IMG_20260410_152237.jpg",
+            "true_label": "neutral",
+            "face_detected": true,
+            "bbox": [
+                787,
+                1897,
+                829,
+                829
+            ],
+            "correct": true,
+            "predicted_class": "neutral",
+            "confidence": 0.47018325328826904,
+            "probabilities": {
+                "angry": 0.18409328162670135,
+                "disgust": 0.004620799794793129,
+                "fear": 0.056056033819913864,
+                "happy": 0.13322558999061584,
+                "neutral": 0.47018325328826904,
+                "sad": 0.13967010378837585,
+                "surprise": 0.012150963768362999
+            }
+        },
+        {
+            "filename": "IMG-20241029-WA0009(1).jpg",
+            "true_label": "neutral",
+            "face_detected": true,
+            "bbox": [
+                256,
+                349,
+                351,
+                351
+            ],
+            "correct": true,
+            "predicted_class": "neutral",
+            "confidence": 0.7816968560218811,
+            "probabilities": {
+                "angry": 0.06291025131940842,
+                "disgust": 0.0011304763611406088,
+                "fear": 0.04318459331989288,
+                "happy": 0.013215644285082817,
+                "neutral": 0.7816968560218811,
+                "sad": 0.09165895730257034,
+                "surprise": 0.0062031932175159454
+            }
+        },
+        {
+            "filename": "IMG-20241128-WA0036.jpg",
+            "true_label": "happy",
+            "face_detected": true,
+            "bbox": [
+                228,
+                334,
+                221,
+                221
+            ],
+            "correct": true,
+            "predicted_class": "happy",
+            "confidence": 0.26810264587402344,
+            "probabilities": {
+                "angry": 0.19509513676166534,
+                "disgust": 0.13466930389404297,
+                "fear": 0.05205981433391571,
+                "happy": 0.26810264587402344,
+                "neutral": 0.25268104672431946,
+                "sad": 0.06724748760461807,
+                "surprise": 0.03014460951089859
+            }
+        },
+        {
+            "filename": "IMG-20241207-WA0021.jpg",
+            "true_label": "sad",
+            "face_detected": true,
+            "bbox": [
+                1163,
+                972,
+                931,
+                931
+            ],
+            "correct": false,
+            "predicted_class": "neutral",
+            "confidence": 0.44982263445854187,
+            "probabilities": {
+                "angry": 0.17966625094413757,
+                "disgust": 0.0020909239538013935,
+                "fear": 0.09376541525125504,
+                "happy": 0.0034967982210218906,
+                "neutral": 0.44982263445854187,
+                "sad": 0.26178568601608276,
+                "surprise": 0.009372349828481674
+            }
+        },
+        {
+            "filename": "IMG-20250830-WA0048.jpg",
+            "true_label": "neutral",
+            "face_detected": true,
+            "bbox": [
+                1058,
+                646,
+                1370,
+                1370
+            ],
+            "correct": true,
+            "predicted_class": "neutral",
+            "confidence": 0.604947566986084,
+            "probabilities": {
+                "angry": 0.19293072819709778,
+                "disgust": 0.006103781051933765,
+                "fear": 0.058279648423194885,
+                "happy": 0.05045589804649353,
+                "neutral": 0.604947566986084,
+                "sad": 0.07002376019954681,
+                "surprise": 0.01725859008729458
+            }
+        },
+        {
+            "filename": "IMG20200413144756.jpg",
+            "true_label": "sad",
+            "face_detected": true,
+            "bbox": [
+                2782,
+                2426,
+                449,
+                449
+            ],
+            "correct": true,
+            "predicted_class": "sad",
+            "confidence": 0.2968862056732178,
+            "probabilities": {
+                "angry": 0.2572978138923645,
+                "disgust": 0.11436381191015244,
+                "fear": 0.2368209958076477,
+                "happy": 0.02327268198132515,
+                "neutral": 0.06067316234111786,
+                "sad": 0.2968862056732178,
+                "surprise": 0.010685272514820099
+            }
+        },
+        {
+            "filename": "IMG_20260430_211801_813.webp",
+            "true_label": "fear",
+            "face_detected": true,
+            "bbox": [
+                391,
+                903,
+                807,
+                807
+            ],
+            "correct": false,
+            "predicted_class": "sad",
+            "confidence": 0.3561130166053772,
+            "probabilities": {
+                "angry": 0.13172271847724915,
+                "disgust": 0.0020194039680063725,
+                "fear": 0.1820746511220932,
+                "happy": 0.005159448832273483,
+                "neutral": 0.30996498465538025,
+                "sad": 0.3561130166053772,
+                "surprise": 0.01294580940157175
+            }
+        },
+        {
+            "filename": "IMG_20250903_074442_988.jpg",
+            "true_label": "no_face",
+            "face_detected": false,
+            "detector_correct": true
+        },
+        {
+            "filename": "IMG_20240926_133913.jpg",
+            "true_label": "no_face",
+            "face_detected": true,
+            "detector_correct": false,
+            "false_positive": true,
+            "bbox": [
+                20,
+                1817,
+                234,
+                234
+            ],
+            "predicted_class": "angry",
+            "confidence": 0.3286740481853485,
+            "probabilities": {
+                "angry": 0.3286740481853485,
+                "disgust": 0.007117941044270992,
+                "fear": 0.10994699597358704,
+                "happy": 0.009405351243913174,
+                "neutral": 0.2795465588569641,
+                "sad": 0.22168296575546265,
+                "surprise": 0.04362611472606659
+            }
+        }
+    ],
+    "v2b_vs_v3a_comparisons": [
+        {
+            "filename": "IMG_20250609_122532.jpg",
+            "true_label": "happy",
+            "v2b_pred": "sad",
+            "v2b_conf": 0.8704,
+            "v2b_correct": false,
+            "v3a_pred": "angry",
+            "v3a_conf": 0.3682500422000885,
+            "v3a_correct": false,
+            "change": "maintained_incorrect"
+        },
+        {
+            "filename": "IMG_20250829_140834.jpg",
+            "true_label": "neutral",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.5673,
+            "v2b_correct": true,
+            "v3a_pred": "neutral",
+            "v3a_conf": 0.6370334029197693,
+            "v3a_correct": true,
+            "change": "maintained_correct"
+        },
+        {
+            "filename": "IMG_20260410_152237.jpg",
+            "true_label": "neutral",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.7655,
+            "v2b_correct": true,
+            "v3a_pred": "neutral",
+            "v3a_conf": 0.47018325328826904,
+            "v3a_correct": true,
+            "change": "maintained_correct"
+        },
+        {
+            "filename": "IMG-20241029-WA0009(1).jpg",
+            "true_label": "neutral",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.9915,
+            "v2b_correct": true,
+            "v3a_pred": "neutral",
+            "v3a_conf": 0.7816968560218811,
+            "v3a_correct": true,
+            "change": "maintained_correct"
+        },
+        {
+            "filename": "IMG-20241128-WA0036.jpg",
+            "true_label": "happy",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.6114,
+            "v2b_correct": false,
+            "v3a_pred": "happy",
+            "v3a_conf": 0.26810264587402344,
+            "v3a_correct": true,
+            "change": "improved"
+        },
+        {
+            "filename": "IMG-20241207-WA0021.jpg",
+            "true_label": "sad",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.8269,
+            "v2b_correct": false,
+            "v3a_pred": "neutral",
+            "v3a_conf": 0.44982263445854187,
+            "v3a_correct": false,
+            "change": "maintained_incorrect"
+        },
+        {
+            "filename": "IMG-20250830-WA0048.jpg",
+            "true_label": "neutral",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.9974,
+            "v2b_correct": true,
+            "v3a_pred": "neutral",
+            "v3a_conf": 0.604947566986084,
+            "v3a_correct": true,
+            "change": "maintained_correct"
+        },
+        {
+            "filename": "IMG20200413144756.jpg",
+            "true_label": "sad",
+            "v2b_pred": "sad",
+            "v2b_conf": 0.7902,
+            "v2b_correct": true,
+            "v3a_pred": "sad",
+            "v3a_conf": 0.2968862056732178,
+            "v3a_correct": true,
+            "change": "maintained_correct"
+        },
+        {
+            "filename": "IMG_20260430_211801_813.webp",
+            "true_label": "fear",
+            "v2b_pred": "neutral",
+            "v2b_conf": 0.4965,
+            "v2b_correct": false,
+            "v3a_pred": "sad",
+            "v3a_conf": 0.3561130166053772,
+            "v3a_correct": false,
+            "change": "maintained_incorrect"
+        }
+    ]
+}

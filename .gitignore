@@ -22,3 +22,13 @@ CNN_DataSet/
 Thumbs.db
 Desktop.ini
 
+# Web App
+web/node_modules/
+web/.next/
+web/.env.local
+
+# Server
+server/__pycache__/
+
+# Validation samples
+validation_samples/

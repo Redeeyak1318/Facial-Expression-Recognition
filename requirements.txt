@@ -5,3 +5,6 @@ numpy==2.4.2
 # PyTorch (CPU)
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.10.0
+
+# Face Detection
+opencv-python>=4.8.0

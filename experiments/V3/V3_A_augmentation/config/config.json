@@ -1,0 +1,23 @@
+{
+    "experiment_name": "V3_A_augmentation",
+    "model_name": "ResidualCNN (V2-B)",
+    "parameter_count": 307687,
+    "random_seed": 42,
+    "loss": "CrossEntropyLoss(weight=class_weights)",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "max_epochs": 30,
+    "patience": 5,
+    "augmentation": "Aggressive V3-A Tensor Pipeline",
+    "class_weights": {
+        "angry": 1.026703755215577,
+        "disgust": 9.415816326530612,
+        "fear": 1.0010848928668294,
+        "happy": 0.5684583397505005,
+        "neutral": 0.8259118371000224,
+        "sad": 0.849091327352197,
+        "surprise": 1.2932725998598458
+    },
+    "device": "cpu"
+}
