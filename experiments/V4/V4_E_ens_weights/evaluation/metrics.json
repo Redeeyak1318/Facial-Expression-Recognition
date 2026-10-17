@@ -1,0 +1,61 @@
+{
+    "experiment_name": "V4_E_ens_weights",
+    "checkpoint_evaluated": "C:\\Facial-Expression-Recognition\\experiments\\V4\\V4_E_ens_weights\\checkpoint\\best_model.pth",
+    "best_epoch": 16,
+    "accuracy": 0.6117302869880189,
+    "macro_precision": 0.5992467057511995,
+    "macro_recall": 0.5791091777763243,
+    "macro_f1": 0.5850878891140737,
+    "per_class": {
+        "angry": {
+            "precision": 0.5430232558139535,
+            "recall": 0.48747390396659707,
+            "f1": 0.5137513751375137,
+            "support": 958
+        },
+        "disgust": {
+            "precision": 0.627906976744186,
+            "recall": 0.4864864864864865,
+            "f1": 0.548223350253807,
+            "support": 111
+        },
+        "fear": {
+            "precision": 0.46153846153846156,
+            "recall": 0.33984375,
+            "f1": 0.3914510686164229,
+            "support": 1024
+        },
+        "happy": {
+            "precision": 0.8404133180252583,
+            "recall": 0.8252536640360767,
+            "f1": 0.832764505119454,
+            "support": 1774
+        },
+        "neutral": {
+            "precision": 0.5210997442455243,
+            "recall": 0.6609894566098946,
+            "f1": 0.5827672506256704,
+            "support": 1233
+        },
+        "sad": {
+            "precision": 0.46171516079632463,
+            "recall": 0.483560545308741,
+            "f1": 0.47238542890716806,
+            "support": 1247
+        },
+        "surprise": {
+            "precision": 0.7390300230946882,
+            "recall": 0.7701564380264742,
+            "f1": 0.7542722451384798,
+            "support": 831
+        }
+    },
+    "comparison_v3b": {
+        "v3b_accuracy": 0.5916689885762051,
+        "v3b_macro_f1": 0.5575540321837488,
+        "delta_accuracy": 0.02006129841181381,
+        "delta_macro_f1": 0.02753385693032495
+    },
+    "total_test_samples": 7178,
+    "evaluation_time_seconds": 16.932666778564453
+}

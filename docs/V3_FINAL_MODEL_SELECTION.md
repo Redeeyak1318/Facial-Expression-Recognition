@@ -1,12 +1,16 @@
 # V3 Final Model Selection
 
-## Final Selected Model: V3-B (Moderate Augmentation)
+## V3-B (Moderate Augmentation) — Archived
+
+> **Note:** V3-B was superseded by **V4-E (ENS Weighting)** as the production model.
+> V4-E checkpoint: `experiments/V4/V4_E_ens_weights/checkpoint/best_model.pth`
+> V4-E test metrics: Accuracy 0.6117, Macro F1 0.5851 (+2.75% over V3-B).
 
 - **Architecture**: ResidualCNN (V2-B architecture)
 - **Parameters**: 307,687
 - **Best Epoch**: 26
 - **Selection Criterion**: Highest Validation Macro F1
-- **Status**: Current Production Model
+- **Status**: Archived (previously production; checkpoint preserved)
 
 ## Evaluation Results
 

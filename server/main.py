@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from src.inference.predictor import predict_expression_from_photo
 
-app = FastAPI(title="Facial Expression Recognition V2 API")
+app = FastAPI(title="Facial Expression Recognition V4 API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,7 +25,7 @@ app.add_middleware(
 def health_check():
     return {
         "status": "ok",
-        "model": "V3-B Residual CNN"
+        "model": "V4-E Residual CNN (ENS-weighted)"
     }
 
 @app.post("/predict")

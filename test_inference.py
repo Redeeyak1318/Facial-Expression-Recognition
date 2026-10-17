@@ -1,5 +1,5 @@
 """
-Test script for the V2-B standalone inference pipeline.
+Test script for the V4-E standalone inference pipeline.
 """
 import sys
 import os
@@ -14,7 +14,7 @@ from src.data.config import CLASSES
 
 def run_test():
     print("=" * 60)
-    print("INFERENCE PIPELINE TEST (V2-B)")
+    print("INFERENCE PIPELINE TEST (V4-E)")
     print("=" * 60)
     
     # Verify the model is not loaded initially
@@ -32,7 +32,7 @@ def run_test():
     
     # 6. Verify model loaded successfully
     assert pred._model is not None, "Model failed to load lazily."
-    print("Model loaded successfully from V2-B checkpoint.")
+    print("Model loaded successfully from V4-E checkpoint.")
     
     # 3. Output shape/fields are correct
     assert "predicted_class" in result

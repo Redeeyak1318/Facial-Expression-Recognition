@@ -1,7 +1,7 @@
 # Facial Expression Recognition using a CNN
 
 ## Project Overview
-This is a 7-class facial-expression classification project utilizing a custom Convolutional Neural Network (CNN) trained on grayscale facial images. The current production model is **V3-B Moderate Augmentation** using the **ResidualCNN (V2-B)** architecture.
+This is a 7-class facial-expression classification project utilizing a custom Convolutional Neural Network (CNN) trained on grayscale facial images. The current production model is **V4-E ENS-Weighted** using the **ResidualCNN (V2-B)** architecture with Effective Number of Samples class weighting (β=0.999).
 
 Classes:
 - angry
@@ -26,7 +26,7 @@ Final split:
 - test = 7,178
 
 ## Production Preprocessing & Inference
-- Haar cascade face detection (`haarcascade_frontalface_default.xml`)
+- MediaPipe BlazeFace full-range face detection (min_confidence=0.7)
 - selection of the largest detected face
 - 0% tight bounding-box crop
 - conversion to grayscale
@@ -34,22 +34,28 @@ Final split:
 - normalization to [0,1]
 - lazy/path-based image loading during training
 
-## Production Model Architecture (V3-B)
-The current production model uses the **ResidualCNN** architecture (introduced in V2-B).
+## Production Model Architecture (V4-E)
+The current production model uses the **ResidualCNN** architecture (introduced in V2-B) with **Effective Number of Samples (ENS) weighting** (β=0.999).
 - Architecture: Residual blocks with skip connections, batch normalization, and dropout.
 - Parameters: 307,687
+- Loss: CrossEntropyLoss with ENS class weights
 
-## Final Model Selection (V3-B)
-- **Selected experiment**: V3-B Moderate Augmentation
+## Final Model Selection (V4-E)
+- **Selected experiment**: V4-E Effective Number of Samples (ENS) Weighting
 - **Selection criterion**: Highest validation Macro F1
-- **Best validation Macro F1**: 0.5795
-- **Checkpoint**: `experiments/V3/V3_B_moderate_augmentation/checkpoint/best_model.pth`
+- **Best validation Macro F1**: 0.5905
+- **Checkpoint**: `experiments/V4/V4_E_ens_weights/checkpoint/best_model.pth`
 
-Held-out V3-B test metrics:
-- Accuracy = 0.5917
-- Macro Precision = 0.5489
-- Macro Recall = 0.5911
-- Macro F1 = 0.5576
+Held-out V4-E test metrics:
+- Accuracy = 0.6117
+- Macro Precision = 0.5992
+- Macro Recall = 0.5791
+- Macro F1 = 0.5851
+
+### Previous Production Model (V3-B — Archived)
+- **Checkpoint**: `experiments/V3/V3_B_moderate_augmentation/checkpoint/best_model.pth` (preserved)
+- Accuracy = 0.5917 | Macro F1 = 0.5576
+- V4-E improved over V3-B: Accuracy +2.01%, Macro F1 +2.75%
 
 The official test set was used only for final held-out evaluation and was not used to select the model configuration. A separate set of 11 manually labeled real-world photos was used for qualitative engineering validation only and were not used for training, tuning, or model selection.
 

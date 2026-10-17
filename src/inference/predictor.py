@@ -9,13 +9,13 @@ from src.data.config import CLASSES, NUM_CLASSES
 _model = None
 
 def get_model():
-    """Lazily loads and returns the V2-B ResidualCNN."""
+    """Lazily loads and returns the V4-E ResidualCNN (ENS-weighted)."""
     global _model
     if _model is None:
         checkpoint_path = os.path.join(
-    "experiments", "V3", "V3_B_moderate_augmentation",
-    "checkpoint", "best_model.pth"
-)
+            "experiments", "V4", "V4_E_ens_weights",
+            "checkpoint", "best_model.pth"
+        )
         if not os.path.exists(checkpoint_path):
             raise FileNotFoundError(f"Checkpoint not found at {checkpoint_path}")
             
@@ -30,7 +30,7 @@ def get_model():
 
 def predict_expression(image):
     """
-    Predicts the facial expression from an image using the V2-B model.
+    Predicts the facial expression from an image using the V4-E model.
     
     Args:
         image: PIL Image or string path to an image.

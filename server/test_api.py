@@ -24,7 +24,7 @@ def test_health():
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ok"
-    assert data["model"] == "V3-B Residual CNN"
+    assert data["model"] == "V4-E Residual CNN (ENS-weighted)"
     print("GET /health passed.")
 
 def test_predict_success():
