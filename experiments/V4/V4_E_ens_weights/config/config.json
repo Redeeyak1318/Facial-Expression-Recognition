@@ -1,0 +1,33 @@
+{
+    "experiment_name": "V4_E_ens_weights",
+    "model_name": "ResidualCNN (V2-B / V3-B frozen architecture)",
+    "weighting": "Effective Number of Samples (beta=0.999)",
+    "loss": "CrossEntropyLoss(weight=ens_weights)",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "max_epochs": 30,
+    "patience": 5,
+    "random_seed": 42,
+    "augmentation": "V3-B moderate pipeline",
+    "class_counts": {
+        "angry": 3595,
+        "disgust": 392,
+        "fear": 3687,
+        "happy": 6493,
+        "neutral": 4469,
+        "sad": 4347,
+        "surprise": 2854
+    },
+    "ens_weights": {
+        "angry": 0.7803310768901456,
+        "disgust": 2.3393178970962802,
+        "fear": 0.7784018839066078,
+        "happy": 0.7600882023304776,
+        "neutral": 0.7677186230557971,
+        "sad": 0.7688730523746202,
+        "surprise": 0.8052692643460719
+    },
+    "beta": 0.999,
+    "test_set_usage": "NOT EVALUATED"
+}

@@ -1,18 +1,49 @@
+"""
+Real-world image validation script.
+Processes only the 11 original benchmark photos from the V4-A benchmark,
+evaluating face detection, predicted expression, confidence, and bounding box.
+Saves results in both JSON and CSV formats.
+"""
+
 import os
+import sys
 import argparse
 import json
+import csv
 from PIL import Image, UnidentifiedImageError
-import sys
 
 # Add project root to sys.path to resolve imports properly
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.inference.predictor import predict_expression_from_photo
 
-def validate_images(input_dir):
+# The 11 original photos listed in the V4-A benchmark
+V4_A_BENCHMARK_IMAGES = [
+    "IMG_20250609_122532.jpg",
+    "IMG_20250829_140834.jpg",
+    "IMG_20260410_152237.jpg",
+    "IMG-20241029-WA0009(1).jpg",
+    "IMG-20241128-WA0036.jpg",
+    "IMG-20241207-WA0021.jpg",
+    "IMG-20250830-WA0048.jpg",
+    "IMG20200413144756.jpg",
+    "IMG_20260430_211801_813.webp",
+    "IMG_20250903_074442_988.jpg",
+    "IMG_20240926_133913.jpg"
+]
+
+def validate_images(input_dir="validation_samples", image_list=None, output_json=None, output_csv=None):
     if not os.path.exists(input_dir):
         print(f"Directory {input_dir} does not exist.")
-        return
+        return None
+
+    if image_list is None:
+        image_list = V4_A_BENCHMARK_IMAGES
+
+    if output_json is None:
+        output_json = os.path.join(input_dir, "validation_results.json")
+    if output_csv is None:
+        output_csv = os.path.join(input_dir, "validation_results.csv")
 
     results = []
     stats = {
@@ -35,13 +66,13 @@ def validate_images(input_dir):
     
     total_confidence = 0.0
     
-    for filename in os.listdir(input_dir):
+    for filename in image_list:
         filepath = os.path.join(input_dir, filename)
         
-        # Skip directories and non-image files if any
-        if not os.path.isfile(filepath) or filename.endswith('.json'):
+        if not os.path.exists(filepath):
+            print(f"Skipping {filename}: file not found in {input_dir}")
             continue
-            
+
         stats["total_images"] += 1
         
         try:
@@ -53,6 +84,16 @@ def validate_images(input_dir):
                 stats["invalid_images"] += 1
                 results.append({
                     "filename": filename,
+                    "detection_status": "invalid_image",
+                    "face_detected": False,
+                    "predicted_expression": None,
+                    "predicted_class": None,
+                    "confidence": None,
+                    "bounding_box": None,
+                    "bbox": None,
+                    "probabilities": None,
+                    "width": None,
+                    "height": None,
                     "error": "invalid image"
                 })
                 continue
@@ -62,40 +103,75 @@ def validate_images(input_dir):
             
             stats["successful_face_detections"] += 1
             pred_class = result["predicted_class"]
-            conf = result["confidence"]
+            conf = float(result["confidence"])
+            bbox = result["bbox"]
             
             stats["class_prediction_counts"][pred_class] += 1
             total_confidence += conf
             
             results.append({
                 "filename": filename,
+                "detection_status": "detected",
                 "face_detected": True,
-                "bbox": result["bbox"],
+                "predicted_expression": pred_class,
                 "predicted_class": pred_class,
                 "confidence": conf,
-                "probabilities": result["probabilities"],
+                "bounding_box": bbox,
+                "bbox": bbox,
+                "probabilities": result.get("probabilities", {}),
                 "width": width,
-                "height": height
+                "height": height,
+                "error": None
             })
             
         except ValueError as e:
-            if "face" in str(e).lower() or "detect" in str(e).lower():
+            err_msg = str(e)
+            if "face" in err_msg.lower() or "detect" in err_msg.lower():
                 stats["no_face_images"] += 1
                 results.append({
                     "filename": filename,
+                    "detection_status": "no_face",
                     "face_detected": False,
-                    "error": str(e)
+                    "predicted_expression": None,
+                    "predicted_class": None,
+                    "confidence": None,
+                    "bounding_box": None,
+                    "bbox": None,
+                    "probabilities": None,
+                    "width": width if 'width' in locals() else None,
+                    "height": height if 'height' in locals() else None,
+                    "error": err_msg
                 })
             else:
                 stats["inference_errors"] += 1
                 results.append({
                     "filename": filename,
-                    "error": str(e)
+                    "detection_status": "error",
+                    "face_detected": False,
+                    "predicted_expression": None,
+                    "predicted_class": None,
+                    "confidence": None,
+                    "bounding_box": None,
+                    "bbox": None,
+                    "probabilities": None,
+                    "width": width if 'width' in locals() else None,
+                    "height": height if 'height' in locals() else None,
+                    "error": err_msg
                 })
         except Exception as e:
             stats["inference_errors"] += 1
             results.append({
                 "filename": filename,
+                "detection_status": "error",
+                "face_detected": False,
+                "predicted_expression": None,
+                "predicted_class": None,
+                "confidence": None,
+                "bounding_box": None,
+                "bbox": None,
+                "probabilities": None,
+                "width": width if 'width' in locals() else None,
+                "height": height if 'height' in locals() else None,
                 "error": str(e)
             })
 
@@ -103,7 +179,7 @@ def validate_images(input_dir):
         stats["average_confidence"] = total_confidence / stats["successful_face_detections"]
         
     print("\n=============================")
-    print("VALIDATION SUMMARY")
+    print("VALIDATION SUMMARY (V4-A Benchmark 11 Photos)")
     print("=============================")
     print(f"Total images processed: {stats['total_images']}")
     print(f"Successful face detections: {stats['successful_face_detections']}")
@@ -114,16 +190,58 @@ def validate_images(input_dir):
     print("\nClass Prediction Counts:")
     for cls, count in stats["class_prediction_counts"].items():
         print(f"  {cls}: {count}")
-        
-    output_file = os.path.join(input_dir, "validation_results.json")
-    with open(output_file, 'w') as f:
+
+    print("\nPer-Image Results:")
+    print(f"{'Filename':<30} {'Status':<12} {'Expression':<12} {'Confidence':<12} {'Bounding Box'}")
+    print("-" * 85)
+    for r in results:
+        status = r["detection_status"]
+        expr = r["predicted_expression"] or "-"
+        conf = f"{r['confidence']:.4f}" if r["confidence"] is not None else "-"
+        bbox = str(r["bounding_box"]) if r["bounding_box"] is not None else "-"
+        print(f"{r['filename']:<30} {status:<12} {expr:<12} {conf:<12} {bbox}")
+
+    # 1. Save JSON output
+    with open(output_json, 'w') as f:
         json.dump({"summary": stats, "results": results}, f, indent=4)
-        
-    print(f"\nSaved detailed results to {output_file}")
+    print(f"\nSaved detailed JSON results to {output_json}")
+
+    # 2. Save CSV output
+    csv_columns = [
+        "filename",
+        "detection_status",
+        "predicted_expression",
+        "confidence",
+        "bounding_box",
+        "face_detected",
+        "error"
+    ]
+    with open(output_csv, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=csv_columns)
+        writer.writeheader()
+        for r in results:
+            writer.writerow({
+                "filename": r["filename"],
+                "detection_status": r["detection_status"],
+                "predicted_expression": r["predicted_expression"] or "",
+                "confidence": f"{r['confidence']:.4f}" if r["confidence"] is not None else "",
+                "bounding_box": json.dumps(r["bounding_box"]) if r["bounding_box"] is not None else "",
+                "face_detected": r["face_detected"],
+                "error": r.get("error") or ""
+            })
+    print(f"Saved per-image CSV results to {output_csv}")
+
+    return {"summary": stats, "results": results}
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Validate V2-B model on real images.")
-    parser.add_argument("--input_dir", type=str, required=True, help="Directory containing real images.")
+    parser = argparse.ArgumentParser(description="Validate model on real images (V4-A benchmark 11 photos).")
+    parser.add_argument("--input_dir", type=str, default="validation_samples", help="Directory containing real images.")
+    parser.add_argument("--output_json", type=str, default=None, help="Path to save JSON results.")
+    parser.add_argument("--output_csv", type=str, default=None, help="Path to save CSV results.")
     args = parser.parse_args()
     
-    validate_images(args.input_dir)
+    validate_images(
+        input_dir=args.input_dir,
+        output_json=args.output_json,
+        output_csv=args.output_csv
+    )
